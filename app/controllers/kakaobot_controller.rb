@@ -19,7 +19,16 @@ class KakaobotController < ApplicationController
       getWorkSchedule(targetDate)
 
     if @WorkTable
-      render json: {message:{text:"전상현의 "+@WorkTable.date.to_s+" 근무는 '"+@WorkTable.work_type+"' 입니다."}, message_button: {label: '전체보기', url: "localhost"}}
+      kor_days={
+          0 => "일요일",
+          1 => "월요일",
+          2 => "화요일",
+          3 => "수요일",
+          4 => "목요일",
+          5 => "금요일",
+          6 => "토요일"
+      }
+      render json: {message:{text:"전상현의 "+@WorkTable.date.to_s+' '+kor_days[@WorkTable.date.wday]+" 근무는 '"+@WorkTable.work_type+"' 입니다."}, message_button: {label: '전체보기', url: "localhost"}}
     else
       render json: {message:{text:"데이터가 없습니다. 관리자에게 문의하세요."}}
     end
